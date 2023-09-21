@@ -11,7 +11,7 @@ const UserCover: React.FC<{
         <div>
             <div className="bg-neutral-700 h-44 relative">
                 {data?.coverImage && (
-                    <Image src={data.coverImage} alt="Cover Image"/>
+                    <Image src={data.coverImage} fill style={{ objectFit: 'cover' }} alt="Cover Image"/>
                 )}
                 <div className="absolute -bottom-16 left-4">
                     <Avatar userId={userId} isLarge hasBorder/>

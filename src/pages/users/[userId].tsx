@@ -5,6 +5,7 @@ import {ClipLoader} from "react-spinners";
 import Header from "@/components/Header";
 import UserCover from "@/components/users/UserCover";
 import UserBio from "@/components/users/UserBio";
+import PostFeed from "@/components/posts/PostFeed";
 
 
 const UserPage = () => {
@@ -23,6 +24,7 @@ const UserPage = () => {
             <Header label={data?.name} showBackArrow/>
             <UserCover userId={userId as string} />
             <UserBio userId={userId as string}/>
+            <PostFeed userId={userId as string}/>
         </>
     );
 };

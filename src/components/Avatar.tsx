@@ -18,6 +18,7 @@ const Avatar : React.FC<avatarProps> = ({ userId, isLarge, hasBorder }) => {
     },[router, userId])
     return (
         <div className={`
+            cursor-pointer
             rounded-full
             relative
             ${isLarge ? `w-32` : `w-12`}

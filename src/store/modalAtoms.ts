@@ -13,3 +13,10 @@ export const registerModalAtom = atom({
         isOpen: false,
     },
 });
+
+export const editModalAtom = atom({
+    key: "editModalAtom",
+    default: {
+        isOpen: false,
+    }
+});

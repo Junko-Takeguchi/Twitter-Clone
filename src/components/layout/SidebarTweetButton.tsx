@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import {useRouter} from "next/router";
 import {FaFeather} from "react-icons/fa";
 import {useSetRecoilState} from "recoil";
-import {loginModalAtom} from "@/store/modalAtom";
+import {loginModalAtom} from "@/store/modalAtoms";
 
 const SidebarTweetButton = () => {
     const setLoginIsOpen = useSetRecoilState(loginModalAtom)

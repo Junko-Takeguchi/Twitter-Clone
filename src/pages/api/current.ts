@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
+import prisma from "@/../libs/prismaDb"
 
 export default async function handler(
     req: NextApiRequest,
@@ -14,7 +15,7 @@ export default async function handler(
         if (!session?.user?.email) {
             return res.status(400).json("not logged in");
         }
-        const currentUser = prisma.user.findUnique({
+        const currentUser = await prisma.user.findUnique({
             where: {
                 email: session.user.email
             }
@@ -27,5 +28,4 @@ export default async function handler(
         console.log(e);
         return res.status(400).end();
     }
-
 }

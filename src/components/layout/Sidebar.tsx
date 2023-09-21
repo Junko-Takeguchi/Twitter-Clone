@@ -25,7 +25,7 @@ const Sidebar = () => {
         },
         {
             label: "Profile",
-            href: "/profile",
+            href: `/users/${data?.id}`,
             isProtected: true,
             icon: FaUser,
         },

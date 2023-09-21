@@ -3,7 +3,7 @@ import {IconType} from "react-icons";
 import {useRouter} from "next/router";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import {useSetRecoilState} from "recoil";
-import {loginModalAtom} from "@/store/modalAtom";
+import {loginModalAtom} from "@/store/modalAtoms";
 
 interface SidebarItemProps {
     label: string;
@@ -33,7 +33,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
         else if (href) {
             router.push(href);
         }
-    }, [href, onClick, router])
+    }, [data, href, isProtected, onClick, router, setIsLoginOpen])
     return (
         <div onClick={handleClick} className="flex flex-row items-center">
             <div className="relative rounded-full h-14 w-14 justify-center items-center p-4 hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer lg:hidden">

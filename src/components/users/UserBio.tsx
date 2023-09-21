@@ -4,12 +4,15 @@ import useUser from "@/hooks/useUser";
 import {format} from "date-fns";
 import Button from "@/components/Button";
 import {BiCalendar} from "react-icons/bi";
+import {useSetRecoilState} from "recoil";
+import {editModalAtom} from "@/store/modalAtoms";
 
 const UserBio : React.FC<{ userId: string }> = ({
     userId
 }) => {
     const { data: currentUser } = useCurrentUser();
     const { data: fetchedUser } = useUser(userId);
+    const setOpenEditModal =  useSetRecoilState(editModalAtom);
 
     const createdAt = useMemo(()=>{
         if (!fetchedUser){
@@ -22,7 +25,7 @@ const UserBio : React.FC<{ userId: string }> = ({
         <div className="border-b-[1px] border-neutral-800 pb-4">
             <div className="flex justify-end p-2">
                 {currentUser?.id === userId ? (
-                    <Button secondary label="Edit" onClick={()=>{}}/>
+                    <Button secondary label="Edit" onClick={() => setOpenEditModal({isOpen: true})}/>
                 ) : (
                     <Button label="Follow" onClick={()=>{}} secondary outline/>
                 )}

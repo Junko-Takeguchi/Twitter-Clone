@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import {useRecoilState, useSetRecoilState} from "recoil";
-import {loginModalAtom, registerModalAtom} from "@/store/modalAtom";
+import {loginModalAtom, registerModalAtom} from "@/store/modalAtoms";
 import Input from "@/components/Input";
 import Model from "@/components/Model";
 import {signIn} from "next-auth/react";
