@@ -6,6 +6,7 @@ import Button from "@/components/Button";
 import {BiCalendar} from "react-icons/bi";
 import {useSetRecoilState} from "recoil";
 import {editModalAtom} from "@/store/modalAtoms";
+import useFollow from "@/hooks/useFollow";
 
 const UserBio : React.FC<{ userId: string }> = ({
     userId
@@ -13,6 +14,7 @@ const UserBio : React.FC<{ userId: string }> = ({
     const { data: currentUser } = useCurrentUser();
     const { data: fetchedUser } = useUser(userId);
     const setOpenEditModal =  useSetRecoilState(editModalAtom);
+    const { isFollowing, toggleFollow } = useFollow(userId);
 
     const createdAt = useMemo(()=>{
         if (!fetchedUser){
@@ -27,7 +29,11 @@ const UserBio : React.FC<{ userId: string }> = ({
                 {currentUser?.id === userId ? (
                     <Button secondary label="Edit" onClick={() => setOpenEditModal({isOpen: true})}/>
                 ) : (
-                    <Button label="Follow" onClick={()=>{}} secondary outline/>
+                    <Button
+                        label={isFollowing? 'Unfollow' : 'Follow'}
+                        onClick={toggleFollow}
+                        secondary={!isFollowing}
+                        outline={isFollowing}/>
                 )}
             </div>
             <div className="mt-8 px-4">

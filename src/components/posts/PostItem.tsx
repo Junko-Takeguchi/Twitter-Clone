@@ -5,7 +5,8 @@ import {loginModalAtom} from "@/store/modalAtoms";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import {formatDistanceToNowStrict} from "date-fns";
 import Avatar from "@/components/Avatar";
-import {AiOutlineHeart, AiOutlineMessage} from "react-icons/ai";
+import {AiFillHeart, AiOutlineHeart, AiOutlineMessage} from "react-icons/ai";
+import useLike from "@/hooks/useLike";
 
 interface postItemProps {
     data: Record<string, any>;
@@ -15,6 +16,7 @@ const PostItem: React.FC<postItemProps> = ({ data= {}, userId }) => {
     const router = useRouter();
     const setOpenLoginModal = useSetRecoilState(loginModalAtom);
     const { data: currentUser } = useCurrentUser();
+    const { hasLiked, toggleLike } = useLike({ postId: data.id, userId });
 
     const goToUser = useCallback((e: any)=>{
         e.stopPropagation();
@@ -22,17 +24,18 @@ const PostItem: React.FC<postItemProps> = ({ data= {}, userId }) => {
     }, [router, data.userId]);
 
     const goToPost = useCallback((e: any) =>{
-        e.stopPropagation();
         router.push(`/posts/${data.id}`);
     }, [router, data.id]);
 
-    const onLike = useCallback((e: any) => {
+    const onLike = useCallback(async (e: any) => {
         e.stopPropagation();
-        if(!data?.user){
-            setOpenLoginModal({ isOpen: true });
+        if(!currentUser){
+            return setOpenLoginModal({ isOpen: true });
         }
-        setOpenLoginModal({ isOpen: true });
-    }, [data?.user, setOpenLoginModal]);
+        toggleLike();
+    }, [currentUser, setOpenLoginModal, toggleLike]);
+
+    const LikeIcon = hasLiked ? AiFillHeart : AiOutlineHeart;
     
     const createdAt = useMemo(() => {
         if (!data?.createdAt) {
@@ -112,9 +115,9 @@ const PostItem: React.FC<postItemProps> = ({ data= {}, userId }) => {
                                 transition
                                 hover:text-red-500
                             ">
-                            <AiOutlineHeart  size={20} />
+                            <LikeIcon color={hasLiked ? 'red' : ''} size={20} />
                             <p>
-                                {data.comments?.length || 0}
+                                {data.likedIds.length}
                             </p>
                         </div>
                     </div>

@@ -21,6 +21,7 @@ const Sidebar = () => {
             label: "Notifications",
             href: "/notifications",
             isProtected: true,
+            alert: data?.hasNotification,
             icon: BsBellFill
         },
         {
@@ -42,6 +43,7 @@ const Sidebar = () => {
                             label={item.label}
                             icon={item.icon}
                             isProtected={item.isProtected}
+                            alert={item.alert}
                         ></SidebarItem>
                     ))}
                     {data && (

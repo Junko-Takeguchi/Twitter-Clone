@@ -8,6 +8,7 @@ import Button from "@/components/Button";
 import {useSetRecoilState} from "recoil";
 import {loginModalAtom, registerModalAtom} from "@/store/modalAtoms";
 import registerModal from "@/components/modals/RegisterModal";
+import usePost from "@/hooks/usePost";
 
 interface FormProps {
     placeholder: string;
@@ -19,6 +20,7 @@ const Form: React.FC<FormProps> = ({ postId, isComment, placeholder }) => {
     const setIsRegisterModal = useSetRecoilState(registerModalAtom);
     const { data: currentUser } = useCurrentUser();
     const { mutate: mutatePosts } = usePosts();
+    const { mutate: mutatePost } = usePost(postId as string);
 
     const [body, setBody] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -26,10 +28,12 @@ const Form: React.FC<FormProps> = ({ postId, isComment, placeholder }) => {
     const onSubmit = useCallback(async ()=>{
         try{
             setIsLoading(true);
-            await axios.post('/api/posts', {body});
+            const url = isComment ? `/api/comment?postId=${postId}` : `/api/posts`;
+            await axios.post(url, {body});
             toast.success("Tweet Created");
             setBody('');
             await mutatePosts();
+            mutatePost();
         } catch (e) {
             toast.error("something went wrong");
             console.log(e);
